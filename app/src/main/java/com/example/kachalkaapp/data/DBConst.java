@@ -12,6 +12,6 @@ public class DBConst {
 
     public static final String CREATE_TABLE_NOTES = "CREATE TABLE IF NOT EXISTS " +
             "" + NOTES_TABLE_NAME + " ( " + NOTE_ID + " INTEGER PRIMARY KEY, " + NOTE_DATE +
-            " TEXT, " + NOTE_ACTION + " TEXT, " + NOTE_COUNT_ACTION + " TEXT, " + NOTE_ACTION_TIME + "TEXT);";
+            " TEXT, " + NOTE_ACTION + " TEXT, " + NOTE_COUNT_ACTION + " TEXT, " + NOTE_ACTION_TIME + " TEXT);";
     public static final String DELETE_TABLE_NOTES = "DROP TABLE IF EXISTS " + NOTES_TABLE_NAME;
 }

@@ -24,6 +24,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
     List<Note> notes;
     DBManager dbManager;
 
+    public void updateData(List<Note> notes) {
+        this.notes = notes;
+    }
+
     public NotesAdapter(List<Note> notes, Context context, DBManager dbManager){
         this.notes = notes;
         this.inflater = LayoutInflater.from(context);

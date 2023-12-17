@@ -2,9 +2,7 @@ package com.example.kachalkaapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,60 +20,55 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class EditNoteActivity extends AppCompatActivity {
-
+public class AddNewNoteActivity extends AppCompatActivity {
     EditText action, count, time;
     TextView currentDate;
     ImageView calendar;
-    Button save;
     Calendar date = Calendar.getInstance();
+    Button save;
     DBManager dbManager;
-    Note editNote = new Note();
+    Note newNote = new Note();
     String addDate = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_note);
-        calendar = findViewById(R.id.imageCalendar);
-        currentDate = findViewById(R.id.showDate);
-        action = findViewById(R.id.editAction);
-        count = findViewById(R.id.editCountAction);
-        time = findViewById(R.id.editTimeActoin);
-        save = findViewById(R.id.buttonSaveEditNote);
+        setContentView(R.layout.activity_add_new_note);
+        calendar = findViewById(R.id.imageCalendarNew);
+        currentDate = findViewById(R.id.showDateNew);
+        action = findViewById(R.id.editActionNew);
+        count = findViewById(R.id.editCountActionNew);
+        time = findViewById(R.id.editTimeActoinNew);
+        save = findViewById(R.id.buttonSaveNewNote);
+        setInitialDateTime();
         dbManager = new DBManager(this);
-        Bundle items = getIntent().getExtras();
-        if (items != null){
-            editNote = (Note) items.getSerializable(Note.class.getSimpleName());
-            currentDate.setText(editNote.getDate());
-            action.setText(editNote.getAction());
-            count.setText(editNote.getCountAction());
-            time.setText(editNote.getTime());
-        }
-        dbManager.openDB();
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dbManager.openDB();
-                editNote.setAction(action.getText().toString());
-                editNote.setCountAction(count.getText().toString());
-                editNote.setTime(time.getText().toString());
-                editNote.setDate(addDate);
-                dbManager.updateNote(editNote);
-                Toast.makeText(EditNoteActivity.this, "Данные обновлены", Toast.LENGTH_SHORT).show();
+                newNote.setAction(action.getText().toString());
+                newNote.setCountAction(count.getText().toString());
+                newNote.setTime(time.getText().toString());
+                newNote.setDate(addDate);
+                dbManager.addNewNote(newNote);
+                Toast.makeText(AddNewNoteActivity.this, "Данные записаны!", Toast.LENGTH_SHORT).show();
+                Log.d("QWEQWEQWE", newNote.getAction() + " | " +
+                        newNote.getCountAction() + " | " + newNote.getTime() + " | " +
+                        newNote.getDate());
                 dbManager.closeDB();
             }
         });
         calendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(EditNoteActivity.this, d,
+                new DatePickerDialog(AddNewNoteActivity.this, d,
                         date.get(Calendar.YEAR),
                         date.get(Calendar.MONTH),
                         date.get(Calendar.DAY_OF_MONTH))
                         .show();
             }
         });
+
     }
 
     // установка начальных даты и времени
